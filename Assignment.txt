@@ -1,0 +1,66 @@
+package assignment;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class AssignmentClass {
+
+	public static void main(String[] args) {
+		
+		        Scanner scanner = new Scanner(System.in);
+
+		        // Step 1: Accept item names and prices
+		        String[] itemNames = new String[5];
+		        double[] itemPrices = new double[5];
+		        double total = 0;
+
+		        System.out.println("Enter 5 item names and their prices:");
+		        for (int i = 0; i < 5; i++) {
+		            System.out.print("Item " + (i + 1) + " name: ");
+		            itemNames[i] = scanner.nextLine();
+		            System.out.print("Item " + (i + 1) + " price: ");
+		            itemPrices[i] = scanner.nextDouble();
+		            total += itemPrices[i];
+		            scanner.nextLine(); // consume newline
+		        }
+
+		        System.out.printf("Total amount: ₹%.2f\n", total);
+
+		        // Step 2: Accept amount provided by the customer
+		        System.out.print("Enter the amount provided by the customer: ₹");
+		        double paid = scanner.nextDouble();
+
+		        if (paid < total) {
+		            System.out.println("Insufficient amount provided by customer.");
+		            return;
+		        }
+
+		        double change = paid - total;
+		        System.out.printf("Change to be returned: ₹%.2f\n", change);
+
+		        // Step 3: Calculate minimum number of notes and coins
+		        int[] denominations = {2000, 500, 200, 100, 50, 20, 10, 5, 2, 1}; // INR denominations
+		        int remaining = (int) Math.round(change); // Assuming change in whole rupees
+		        Map<Integer, Integer> changeMap = new LinkedHashMap<>();
+
+		        for (int denom : denominations) {
+		            if (remaining >= denom) {
+		                int count = remaining / denom;
+		                changeMap.put(denom, count);
+		                remaining %= denom;
+		            }
+		        }
+
+		        // Step 4: Output change breakdown
+		        System.out.println("Change breakdown (denomination : count):");
+		        for (Map.Entry<Integer, Integer> entry : changeMap.entrySet()) {
+		            System.out.println("₹" + entry.getKey() + " : " + entry.getValue());
+		        }
+
+		        scanner.close();
+		    }
+		}
+
+
+	
